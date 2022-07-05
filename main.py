@@ -1,0 +1,40 @@
+#divide and conquer algorithm to search a list 
+#assume we have a list from least to greatest. We want to see if a target is in the list and we need the targets location
+#in binary search we can go to the middle of the list and ask if the target is equal or less than OR equal or greater than that middle element
+#this helps us to cut the search in half instantly over and over again
+def naive_search(l, target):
+
+  for i in range (len(l)):
+    #example l=[1,3,10,12]
+    if l[i] == target:
+      return i
+  return -1
+
+#we will leverage the fact that our list is SORTED
+def binary_search(l,traget, low=None, high=None):
+  if low is None:
+    low=0
+  if high is None:
+    high = len(l) - 1
+
+  if high < low:
+    return -1
+  #example l = [1,3,5,10,12] #should return 3
+  midpoint = (low+high) // 2 #2
+
+  if l[midpoint] == target:
+    return midpoint
+  
+  elif target < l[midpoint]:
+    return binary_search(l,target, low, midpoint-1)
+
+  else:
+    #target>l[midpoint]
+    return binary_search(l,target,midpoint+1, high)
+
+
+if __name__ == '__main__':
+  l = [1,3,5,10,12]
+  target = 10
+  print(naive_search(l,target))
+  print(binary_search(l,target))
